@@ -1,25 +1,26 @@
+  
+name: Master CI/CD
+
 on:
   push:
     branches:
       - master
-        - 
-name: Deploy master branch
+
 jobs:
-  deploy:
-    name: deploy
+  primary:
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - name: npm install
-      uses: actions/npm@master
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        args: install
+        node-version: 12.x
+    - name: install dependencies
+      run: yarn install
     - name: serverless deploy
-      uses: serverless/github-action@master
-      with:
-        args: deploy
+      run: npx serverless deploy
       env:
-        SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-        # or if using AWS creds directly
-        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

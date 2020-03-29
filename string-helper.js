@@ -22,14 +22,14 @@ module.exports = {
 
 	fixJson: function fixJson(text) {
 		// preserve newlines, etc - use valid JSON
-		text = text.replace(/\\n/g, "\\n")
-			.replace(/\\'/g, "\\'")
-			.replace(/\\"/g, '\\"')
-			.replace(/\\&/g, "\\&")
-			.replace(/\\r/g, "\\r")
-			.replace(/\\t/g, "\\t")
-			.replace(/\\b/g, "\\b")
-			.replace(/\\f/g, "\\f");
+		text = //text.replace(/\\n/g, "\\n")
+			text.replace(/\\'/g, "\\'")
+				.replace(/\\"/g, '\\"')
+				.replace(/\\&/g, "\\&")
+				.replace(/\\r/g, "\\r")
+				.replace(/\\t/g, "\\t")
+				.replace(/\\b/g, "\\b")
+				.replace(/\\f/g, "\\f");
 		// remove non-printable and other non-valid JSON chars
 		text = text.replace(/[\u0000-\u0019]+/g, "");
 		// wrap key values with double quotes

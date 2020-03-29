@@ -8,6 +8,20 @@ module.exports.handler = async (event, context, callback) => {
 	// Load Classified page and pass a custom User-Agent as the KSL server throws a "403 Unauthorized" otherwise.
 	const res = await axios.get(kslUrl, { headers: { 'User-Agent': stringHelper.makeid(10) } });
 
+	/*	
+	if (res.statusCode !== 200) {
+		let response = {
+			statusCode: res.statusCode,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Credentials': true,
+			},
+			body: JSON.stringify({ "listing": {}, "kslUrl": kslUrl })
+		};
+		return response;
+	}*/
+
+
 	const $ = cheerio.load(res.data, { xmlMode: false, ignoreWhitespace: true, });
 	const data = $('script:not([src])').get()[7].children[0].data
 	console.log("data:", data);
